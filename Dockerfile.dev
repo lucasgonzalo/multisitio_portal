@@ -1,0 +1,17 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Install all dependencies including dev tools
+COPY package*.json ./
+RUN npm install
+
+# Copy source code
+COPY . .
+
+ENV NODE_ENV=development
+
+EXPOSE 3000
+
+# Run with nodemon for hot-reload
+CMD ["npm", "run", "dev"]

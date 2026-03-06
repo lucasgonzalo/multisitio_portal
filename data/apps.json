@@ -13,6 +13,22 @@
       "url": "https://example.multisitios.top",
       "icon": "https://via.placeholder.com/64",
       "category": "Web Apps"
+    },
+    {
+      "name": "TestApp",
+      "description": "Test",
+      "url": "https://test.com",
+      "icon": "https://test.com/icon.png",
+      "category": "Test",
+      "id": "app-1772826222269"
+    },
+    {
+      "name": "Prueba app",
+      "description": "Files on the cloud",
+      "url": "https://files.multisitio.top",
+      "icon": "https://via.placeholder.com/48",
+      "category": "Web Apps",
+      "id": "app-1772836649919"
     }
   ]
 }
