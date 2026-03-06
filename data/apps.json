@@ -1,0 +1,18 @@
+{
+  "portalTitle": "Multisitios Apps Portal",
+  "theme": {
+    "primaryColor": "#3b82f6",
+    "backgroundColor": "#f3f4f6",
+    "textColor": "#1f2937"
+  },
+  "apps": [
+    {
+      "id": "app-1",
+      "name": "Example App",
+      "description": "Sample application placeholder",
+      "url": "https://example.multisitios.top",
+      "icon": "https://via.placeholder.com/64",
+      "category": "Web Apps"
+    }
+  ]
+}

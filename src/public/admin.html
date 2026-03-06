@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Apps Portal</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Admin Panel</h1>
+            <a href="/" class="back-link">← Back to Portal</a>
+        </header>
+
+        <div class="admin-section">
+            <h2>Add New App</h2>
+            <form id="add-app-form" class="app-form">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="app-name" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" id="app-description" required>
+                </div>
+                <div class="form-group">
+                    <label>URL</label>
+                    <input type="url" id="app-url" required>
+                </div>
+                <div class="form-group">
+                    <label>Icon URL</label>
+                    <input type="url" id="app-icon" placeholder="https://...">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <input type="text" id="app-category" required>
+                </div>
+                <button type="submit">Add App</button>
+            </form>
+        </div>
+
+        <div class="admin-section">
+            <h2>Manage Apps</h2>
+            <table id="apps-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div id="edit-modal" class="modal">
+            <div class="modal-content">
+                <h2>Edit App</h2>
+                <form id="edit-app-form" class="app-form">
+                    <input type="hidden" id="edit-app-id">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="edit-app-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" id="edit-app-description" required>
+                    </div>
+                    <div class="form-group">
+                        <label>URL</label>
+                        <input type="url" id="edit-app-url" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Icon URL</label>
+                        <input type="url" id="edit-app-icon">
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <input type="text" id="edit-app-category" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit">Save</button>
+                        <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
