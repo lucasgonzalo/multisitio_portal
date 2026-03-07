@@ -54,6 +54,13 @@ let appsData = {
   apps: []
 };
 
+function logLoginAttempt(req, success) {
+  const timestamp = new Date().toISOString();
+  const ip = req.ip || req.connection.remoteAddress;
+  const status = success ? 'SUCCESS' : 'FAILED';
+  console.log(`[${timestamp}] ${status} login attempt from IP: ${ip}`);
+}
+
 function loadData() {
   try {
     if (fs.existsSync(DATA_FILE)) {
@@ -130,10 +137,13 @@ app.get('/admin/login', (req, res) => {
 
 app.post('/admin/login', (req, res) => {
   const { password } = req.body;
+  
   if (password === ADMIN_PASSWORD) {
     req.session.authenticated = true;
+    logLoginAttempt(req, true);
     res.json({ success: true });
   } else {
+    logLoginAttempt(req, false);
     res.status(401).json({ error: 'Invalid password' });
   }
 });

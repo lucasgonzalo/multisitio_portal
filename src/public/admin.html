@@ -41,6 +41,7 @@
                 </div>
                 <button type="submit">Add App</button>
             </form>
+            <div id="add-app-error" class="error-message" style="display: none;"></div>
         </div>
 
         <div class="admin-section">
@@ -82,6 +83,7 @@
                         <label>Category</label>
                         <input type="text" id="edit-app-category" required>
                     </div>
+                    <div id="edit-app-error" class="error-message" style="display: none;"></div>
                     <div class="form-actions">
                         <button type="submit">Save</button>
                         <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>

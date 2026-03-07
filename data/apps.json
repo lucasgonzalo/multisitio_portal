@@ -29,6 +29,30 @@
       "icon": "https://via.placeholder.com/48",
       "category": "Web Apps",
       "id": "app-1772836649919"
+    },
+    {
+      "name": "Dokploy",
+      "description": "DevOps tool",
+      "url": "https://dokploy.multisitio.top",
+      "icon": "https://via.placeholder.com/48",
+      "category": "DevOps",
+      "id": "app-1772896232226"
+    },
+    {
+      "name": "Odoo18",
+      "description": "ERP CRM all in one business app",
+      "url": "https://odoo.multisitio.top",
+      "icon": "https://via.placeholder.com/48",
+      "category": "ERP",
+      "id": "app-1772896366511"
+    },
+    {
+      "name": "Modista",
+      "description": "qweqwe",
+      "url": "https://modista.multisitio.top",
+      "icon": "https://via.placeholder.com/48",
+      "category": "webapp",
+      "id": "app-1772904249397"
     }
   ]
 }

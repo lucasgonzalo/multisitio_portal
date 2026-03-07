@@ -2,6 +2,21 @@ let apps = [];
 let filteredApps = [];
 let config = {};
 
+function showError(elementId, message) {
+  const errorElement = document.getElementById(elementId);
+  if (errorElement) {
+    errorElement.textContent = message;
+    errorElement.style.display = 'block';
+  }
+}
+
+function hideError(elementId) {
+  const errorElement = document.getElementById(elementId);
+  if (errorElement) {
+    errorElement.style.display = 'none';
+  }
+}
+
 async function loadConfig() {
     try {
         const response = await fetch('/api/config');
@@ -95,6 +110,7 @@ function filterApps() {
 
 async function addApp(e) {
     e.preventDefault();
+    hideError('add-app-error');
     
     const newApp = {
         name: document.getElementById('app-name').value,
@@ -112,17 +128,24 @@ async function addApp(e) {
         });
         
         if (response.ok) {
+            hideError('add-app-error');
             document.getElementById('add-app-form').reset();
             await loadApps();
+        } else {
+            const errorData = await response.json();
+            showError('add-app-error', errorData.error || 'Failed to add app');
         }
     } catch (error) {
         console.error('Error adding app:', error);
+        showError('add-app-error', 'Network error. Please try again.');
     }
 }
 
 function editApp(id) {
     const app = apps.find(a => a.id === id);
     if (!app) return;
+    
+    hideError('edit-app-error');
     
     document.getElementById('edit-app-id').value = app.id;
     document.getElementById('edit-app-name').value = app.name;
@@ -136,6 +159,7 @@ function editApp(id) {
 
 async function updateApp(e) {
     e.preventDefault();
+    hideError('edit-app-error');
     
     const id = document.getElementById('edit-app-id').value;
     const updatedApp = {
@@ -154,11 +178,16 @@ async function updateApp(e) {
         });
         
         if (response.ok) {
+            hideError('edit-app-error');
             closeModal();
             await loadApps();
+        } else {
+            const errorData = await response.json();
+            showError('edit-app-error', errorData.error || 'Failed to update app');
         }
     } catch (error) {
         console.error('Error updating app:', error);
+        showError('edit-app-error', 'Network error. Please try again.');
     }
 }
 
@@ -172,13 +201,18 @@ async function deleteApp(id) {
         
         if (response.ok) {
             await loadApps();
+        } else {
+            const errorData = await response.json();
+            alert(`Failed to delete app: ${errorData.error || 'Unknown error'}`);
         }
     } catch (error) {
         console.error('Error deleting app:', error);
+        alert('Network error. Please try again.');
     }
 }
 
 function closeModal() {
+    hideError('edit-app-error');
     document.getElementById('edit-modal').classList.remove('active');
 }
 
