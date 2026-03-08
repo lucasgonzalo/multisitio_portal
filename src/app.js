@@ -16,6 +16,7 @@ const SESSION_SECRET = process.env.SESSION_SECRET || 'change-me-in-production';
 app.use(cors());
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.set('trust proxy', 1);
 app.use(session({
   secret: SESSION_SECRET,
   resave: false,
@@ -23,6 +24,7 @@ app.use(session({
   cookie: {
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
+    sameSite: 'lax',
     maxAge: 24 * 60 * 60 * 1000
   }
 }));
