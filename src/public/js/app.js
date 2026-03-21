@@ -216,6 +216,51 @@ function closeModal() {
     document.getElementById('edit-modal').classList.remove('active');
 }
 
+function showMigrationMessage(message, isError = false) {
+    const msgEl = document.getElementById('migration-message');
+    if (msgEl) {
+        msgEl.textContent = message;
+        msgEl.className = 'migration-message ' + (isError ? 'error' : 'success');
+        setTimeout(() => {
+            msgEl.textContent = '';
+            msgEl.className = 'migration-message';
+        }, 5000);
+    }
+}
+
+async function exportData() {
+    window.location.href = '/api/admin/export';
+}
+
+async function importData(file) {
+    if (!confirm('This will replace all current data. Continue?')) return;
+    
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+        try {
+            const data = JSON.parse(e.target.result);
+            
+            const response = await fetch('/api/admin/import', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            
+            if (response.ok) {
+                showMigrationMessage('Import successful!');
+                await loadApps();
+                await loadConfig();
+            } else {
+                const errorData = await response.json();
+                showMigrationMessage(errorData.error || 'Failed to import data', true);
+            }
+        } catch (error) {
+            showMigrationMessage('Invalid JSON file', true);
+        }
+    };
+    reader.readAsText(file);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     loadConfig();
     loadApps();
@@ -224,9 +269,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const categoryFilter = document.getElementById('category-filter');
     const addAppForm = document.getElementById('add-app-form');
     const editAppForm = document.getElementById('edit-app-form');
+    const exportBtn = document.getElementById('export-btn');
+    const importBtn = document.getElementById('import-btn');
+    const importFile = document.getElementById('import-file');
     
     if (searchInput) searchInput.addEventListener('input', filterApps);
     if (categoryFilter) categoryFilter.addEventListener('change', filterApps);
     if (addAppForm) addAppForm.addEventListener('submit', addApp);
     if (editAppForm) editAppForm.addEventListener('submit', updateApp);
+    if (exportBtn) exportBtn.addEventListener('click', exportData);
+    if (importBtn) importBtn.addEventListener('click', () => importFile.click());
+    if (importFile) importFile.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+            importData(e.target.files[0]);
+            e.target.value = '';
+        }
+    });
 });

@@ -125,6 +125,39 @@ app.delete('/api/apps/:id', requireAuth, (req, res) => {
   }
 });
 
+app.get('/api/admin/export', requireAuth, (req, res) => {
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+  const filename = `apps-portal-${timestamp}.json`;
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+  res.json(appsData);
+});
+
+app.post('/api/admin/import', requireAuth, (req, res) => {
+  try {
+    const data = req.body;
+    
+    if (!data || !data.portalTitle || !data.theme || !Array.isArray(data.apps)) {
+      return res.status(400).json({ error: 'Invalid file format. Must contain portalTitle, theme, and apps array.' });
+    }
+    
+    const backupPath = DATA_FILE + '.bak';
+    fs.writeFileSync(backupPath, JSON.stringify(appsData, null, 2));
+    
+    appsData = {
+      portalTitle: data.portalTitle,
+      theme: data.theme,
+      apps: data.apps
+    };
+    saveData();
+    
+    res.json({ success: true, message: 'Data imported successfully' });
+  } catch (error) {
+    console.error('Error importing data:', error);
+    res.status(500).json({ error: 'Failed to import data' });
+  }
+});
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });

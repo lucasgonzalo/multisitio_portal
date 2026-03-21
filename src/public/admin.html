@@ -58,6 +58,16 @@
             </table>
         </div>
 
+        <div class="admin-section">
+            <h2>Data Migration</h2>
+            <div class="migration-buttons">
+                <button id="export-btn">Download Backup</button>
+                <button id="import-btn">Upload Backup</button>
+                <input type="file" id="import-file" accept=".json" style="display: none;">
+            </div>
+            <div id="migration-message" class="migration-message"></div>
+        </div>
+
         <div id="edit-modal" class="modal">
             <div class="modal-content">
                 <h2>Edit App</h2>
